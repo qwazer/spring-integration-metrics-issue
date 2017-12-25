@@ -59,5 +59,5 @@ Chain consist of 2 Service Activators: fastService that works about 10ms and slo
 
 ### Expected results:
 
-`fastService` is fast and should have mean duration less than 11 ms.
-`fastService.duration.mean` less than `slowService.duration.mean`
+  * `fastService` should be `fast` -> It should have mean duration less than 11 ms.
+  * `fastService.duration.mean` less than `slowService.duration.mean`
