@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:int="http://www.springframework.org/schema/integration"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd"
+       xmlns:task="http://www.springframework.org/schema/task">
+
+
+    <int:inbound-channel-adapter id="fixedDelayProducer"
+                                 expression="'string'"
+                                 channel="fixedDelayChannel">
+        <int:poller fixed-delay="100"/>
+    </int:inbound-channel-adapter>
+
+
+    <int:channel id="fixedDelayChannel"/>
+
+    <int:chain id="chain" input-channel="fixedDelayChannel" output-channel="nullChannel">
+        <int:service-activator id="fastService" expression="@stringService.handle(payload, 10)"/>
+        <int:service-activator id="slowService" expression="@stringService.handle(payload, 1000)"/>
+    </int:chain>
+
+
+</beans>
